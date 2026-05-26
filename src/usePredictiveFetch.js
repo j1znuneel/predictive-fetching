@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
+import MarkovTracker from './MarkovTracker';
 
 /**
  * usePredictiveFetch
- * A React hook that prefetches data when mouse kinematics suggest a high intent to click.
+ * A React hook that prefetches data based on either:
+ * 1. High-confidence behavioral sequence (Markov Chain)
+ * 2. Mouse kinematics (Kinematic intent prediction)
  * 
  * @param {React.RefObject} targetRef - Ref to the target DOM element.
  * @param {string} url - The GET endpoint to prefetch.
  * @param {Object} options - Optional configuration.
  * @param {number} options.ttl - Cache TTL in milliseconds (default 5000).
  * @param {number} options.threshold - Probability threshold (default 0.85).
+ * @param {string} options.routeKey - The route identifier for Markov prediction.
  */
-export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.85 } = {}) => {
+export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.85, routeKey } = {}) => {
   const [data, setData] = useState(null);
   const cache = useRef(new Map());
   
@@ -129,6 +133,17 @@ export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.8
     s.lastTime = now;
     s.isTicking = false;
   }, [calculateProbability]);
+
+  // Markov Integration: Immediate fetch if confidence is high
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    const prediction = MarkovTracker.predictNext(currentPath);
+
+    if (prediction && prediction.confidence > 0.8 && prediction.route === routeKey) {
+      console.log(`Markov Confidence Met (${(prediction.confidence * 100).toFixed(0)}%): Prefetching ${routeKey}`);
+      performFetch(url);
+    }
+  }, [url, routeKey, performFetch]);
 
   useEffect(() => {
     const s = state.current;

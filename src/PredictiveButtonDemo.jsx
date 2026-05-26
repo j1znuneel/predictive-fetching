@@ -12,10 +12,11 @@ const PredictiveButtonDemo = () => {
   // Use a real mock API for testing
   const targetUrl = 'https://jsonplaceholder.typicode.com/posts/1';
   
-  // 1. Hook usage
+  // 1. Hook usage with routeKey for Markov
   const prefetchedData = usePredictiveFetch(buttonRef, targetUrl, {
     ttl: 5000,
-    threshold: 0.85
+    threshold: 0.85,
+    routeKey: '/dashboard'
   });
 
   const handleClick = () => {
