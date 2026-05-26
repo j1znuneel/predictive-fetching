@@ -104,7 +104,7 @@ export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.8
        decelerationFactor = Math.min(1, Math.abs(s.acceleration) / 5000);
     }
 
-    const proximity = Math.max(0, 1 - (distance / 400));
+    const proximity = Math.max(0, 1 - (distance / 250));
 
     // Composite score: Alignment (40%), Deceleration (40%), Proximity (20%)
     const score = (dotProduct * 0.4) + (decelerationFactor * 0.4) + (proximity * 0.2);
@@ -165,8 +165,8 @@ export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.8
       s.currentY = e.clientY;
       
       if (!s.isTicking) {
-        requestAnimationFrame(update);
         s.isTicking = true;
+        requestAnimationFrame(update);
       }
     };
 
