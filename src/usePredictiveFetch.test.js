@@ -2,6 +2,7 @@ import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { usePredictiveFetch } from './usePredictiveFetch';
 import MarkovTracker from './MarkovTracker';
+import NetworkSpeedMonitor from './utils/NetworkSpeedMonitor';
 
 describe('usePredictiveFetch', () => {
   let targetRef;
@@ -39,6 +40,8 @@ describe('usePredictiveFetch', () => {
     });
 
     vi.spyOn(MarkovTracker, 'predictNext').mockReturnValue(null);
+    vi.spyOn(NetworkSpeedMonitor, 'measureLatency').mockResolvedValue(100);
+    vi.spyOn(NetworkSpeedMonitor, 'calculateThreshold').mockReturnValue(0.85);
   });
 
   afterEach(() => {

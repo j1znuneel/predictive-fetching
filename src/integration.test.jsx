@@ -3,6 +3,7 @@ import { render, screen, act, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { usePredictiveFetch } from './usePredictiveFetch';
 import MarkovTracker from './MarkovTracker';
+import NetworkSpeedMonitor from './utils/NetworkSpeedMonitor';
 
 // Helper component for integration test
 const TestComponent = ({ url, routeKey }) => {
@@ -40,6 +41,9 @@ describe('Predictive Engine Integration', () => {
       now: vi.fn(() => currentTime) 
     });
     vi.stubGlobal('advanceTime', (ms) => { currentTime += ms; });
+
+    vi.spyOn(NetworkSpeedMonitor, 'measureLatency').mockResolvedValue(100);
+    vi.spyOn(NetworkSpeedMonitor, 'calculateThreshold').mockReturnValue(0.85);
   });
 
   afterEach(() => {

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import MarkovTracker from './MarkovTracker';
+import { calculateBestFitAlignment } from './utils/kinematics';
+import NetworkSpeedMonitor from './utils/NetworkSpeedMonitor';
 
 /**
  * usePredictiveFetch
@@ -16,6 +18,7 @@ import MarkovTracker from './MarkovTracker';
  */
 export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.85, routeKey } = {}) => {
   const [data, setData] = useState(null);
+  const [dynamicThreshold, setDynamicThreshold] = useState(threshold);
   const cache = useRef(new Map());
   
   // Kinematic state
@@ -74,11 +77,15 @@ export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.8
       return 0;
     }
 
+    // Best-fit alignment (Center + 4 Corners)
+    const dotProduct = calculateBestFitAlignment(
+      { x: s.currentX, y: s.currentY },
+      s.velocity,
+      rect
+    );
+
     const normVx = s.velocity.x / s.speed;
     const normVy = s.velocity.y / s.speed;
-    const normTx = toTargetX / distance;
-    const normTy = toTargetY / distance;
-    const dotProduct = (normVx * normTx) + (normVy * normTy);
     
     // 1. OVERSHOOT PROTECTION
     // If we are moving away from the target center (distance is increasing), kill intent.
@@ -109,7 +116,7 @@ export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.8
     // Composite score: Alignment (40%), Deceleration (40%), Proximity (20%)
     const score = (dotProduct * 0.4) + (decelerationFactor * 0.4) + (proximity * 0.2);
 
-    if (score > threshold && !s.hasFired) {
+    if (score > dynamicThreshold && !s.hasFired) {
       s.hasFired = true;
       performFetch(url);
     } else if (score < 0.4) {
@@ -148,6 +155,12 @@ export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.8
 
   // Markov Integration: Immediate fetch if confidence is high
   useEffect(() => {
+    // 1. Measure Network Latency
+    NetworkSpeedMonitor.measureLatency().then(lat => {
+      const adjusted = NetworkSpeedMonitor.calculateThreshold(lat);
+      setDynamicThreshold(adjusted);
+    });
+
     const currentPath = window.location.pathname;
     const prediction = MarkovTracker.predictNext(currentPath);
 
