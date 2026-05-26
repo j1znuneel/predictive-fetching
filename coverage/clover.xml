@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1779808548876" clover="3.2.0">
+  <project timestamp="1779808548876" name="All files">
+    <metrics statements="27" coveredstatements="24" conditionals="20" coveredconditionals="18" methods="5" coveredmethods="5" elements="52" coveredelements="47" complexity="0" loc="27" ncloc="27" packages="1" files="1" classes="1"/>
+    <file name="MarkovTracker.js" path="/home/jishnu/Documents/prefetchAI/src/MarkovTracker.js">
+      <metrics statements="27" coveredstatements="24" conditionals="20" coveredconditionals="18" methods="5" coveredmethods="5"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="16" count="1" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="18" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="20" count="0" type="stmt"/>
+      <line num="21" count="0" type="stmt"/>
+      <line num="26" count="9" type="stmt"/>
+      <line num="27" count="9" type="stmt"/>
+      <line num="29" count="0" type="stmt"/>
+      <line num="39" count="10" type="cond" truecount="5" falsecount="0"/>
+      <line num="41" count="9" type="cond" truecount="2" falsecount="0"/>
+      <line num="42" count="4" type="stmt"/>
+      <line num="45" count="9" type="cond" truecount="2" falsecount="0"/>
+      <line num="46" count="10" type="stmt"/>
+      <line num="55" count="3" type="stmt"/>
+      <line num="56" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="58" count="2" type="stmt"/>
+      <line num="59" count="2" type="stmt"/>
+      <line num="60" count="2" type="stmt"/>
+      <line num="62" count="2" type="stmt"/>
+      <line num="63" count="4" type="stmt"/>
+      <line num="64" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="65" count="3" type="stmt"/>
+      <line num="66" count="3" type="stmt"/>
+      <line num="70" count="2" type="cond" truecount="3" falsecount="1"/>
+      <line num="72" count="2" type="stmt"/>
+    </file>
+  </project>
+</coverage>

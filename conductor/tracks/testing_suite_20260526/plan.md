@@ -3,8 +3,8 @@
 ## Phase 1: Unit Testing for MarkovTracker
 - [x] Task: Define test scenarios for MarkovTracker (856e5a4)
 - [x] Task: Implement unit tests for MarkovTracker.js (04a9796)
-- [~] Task: Verify MarkovTracker test coverage (>80%)
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Unit Testing for MarkovTracker' (Protocol in workflow.md)
+- [x] Task: Verify MarkovTracker test coverage (>80%) (3f641e4)
+- [~] Task: Conductor - User Manual Verification 'Phase 1: Unit Testing for MarkovTracker' (Protocol in workflow.md)
 
 ## Phase 2: Unit Testing for usePredictiveFetch
 - [ ] Task: Define test scenarios for usePredictiveFetch hook
