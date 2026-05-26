@@ -1,8 +1,0 @@
-{
-  "track_id": "testing_suite_20260526",
-  "type": "test",
-  "status": "new",
-  "created_at": "2026-05-26T12:00:00Z",
-  "updated_at": "2026-05-26T12:00:00Z",
-  "description": "Implement comprehensive unit and integration tests for usePredictiveFetch and MarkovTracker"
-}
