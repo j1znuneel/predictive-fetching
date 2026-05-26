@@ -22,6 +22,11 @@ class MarkovTracker {
     }
   }
 
+  // Alias for backward compatibility with MarkovTestBench
+  load() {
+    return this.loadMatrix();
+  }
+
   loadHistory() {
     try {
       const data = localStorage.getItem(this.historyKey);
