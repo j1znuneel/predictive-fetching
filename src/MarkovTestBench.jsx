@@ -34,8 +34,8 @@ const MarkovTestBench = () => {
       <p>Current Mock Path: <code>{currentPath}</code></p>
       
       <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-        <button onClick={() => simulateTransition('/dashboard')}>Record → /dashboard</button>
-        <button onClick={() => simulateTransition('/profile')}>Record → /profile</button>
+        <button onClick={() => simulateTransition('/dashboard/1')}>Record → /dashboard/1</button>
+        <button onClick={() => simulateTransition('/dashboard/2')}>Record → /dashboard/2</button>
         <button onClick={() => simulateTransition('/settings')}>Record → /settings</button>
       </div>
 
@@ -45,7 +45,7 @@ const MarkovTestBench = () => {
       </div>
 
       <div style={{ marginTop: '20px' }}>
-        <strong>Prediction:</strong> 
+        <strong>Prediction for current path:</strong> 
         {prediction ? (
           <span style={{ color: prediction.confidence > 0.8 ? 'green' : 'orange', fontWeight: 'bold' }}>
             {prediction.route} ({(prediction.confidence * 100).toFixed(0)}% confidence)
@@ -60,10 +60,14 @@ const MarkovTestBench = () => {
       <div style={{ marginTop: '20px', fontSize: '13px', color: '#718096' }}>
         <strong>To test the 80% threshold:</strong>
         <ol>
-          <li>Click <b>"Record → /dashboard"</b> 5 times.</li>
-          <li>The confidence for <code>/dashboard</code> will reach 100%.</li>
-          <li>Refresh the page. If your <code>usePredictiveFetch</code> has <code>routeKey: '/dashboard'</code>, it will fetch instantly.</li>
+          <li>Click <b>"Record → /dashboard/1"</b> 5 times.</li>
+          <li>The confidence for <code>/dashboard/1</code> will reach 100%.</li>
+          <li>Click <b>"Reload to Test Prefetch"</b> below.</li>
+          <li>Target A will prefetch <b>instantly</b> on load.</li>
         </ol>
+        <button onClick={() => window.location.reload()} style={{ padding: '8px 16px', background: '#4a5568', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+          Reload to Test Prefetch
+        </button>
       </div>
     </div>
   );
