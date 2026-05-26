@@ -80,19 +80,31 @@ export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.8
     const normTy = toTargetY / distance;
     const dotProduct = (normVx * normTx) + (normVy * normTy);
     
-    // REQUIRE sharp alignment (within ~36 degrees)
-    if (dotProduct < 0.8) {
+    // 1. OVERSHOOT PROTECTION
+    // If we are moving away from the target center (distance is increasing), kill intent.
+    // Or if the cursor is already "past" the target in the direction of velocity.
+    const isMovingAway = dotProduct < 0;
+    const isPastY = (normVy > 0 && s.currentY > rect.bottom) || (normVy < 0 && s.currentY < rect.top);
+    const isPastX = (normVx > 0 && s.currentX > rect.right) || (normVx < 0 && s.currentX < rect.left);
+
+    if (isMovingAway || isPastY || isPastX) {
       s.hasFired = false;
       return 0;
     }
     
-    // Normalize deceleration: ignore micro-jitter (< 500 px/s2)
+    // 2. REQUIRE sharp alignment (within ~25 degrees now, even stricter)
+    if (dotProduct < 0.9) {
+      return 0;
+    }
+    
+    // 3. DECELERATION is the primary differentiator for stacked buttons.
+    // You only slow down for the target you actually intend to hit.
     let decelerationFactor = 0;
-    if (s.acceleration < -500) { 
-       decelerationFactor = Math.min(1, Math.abs(s.acceleration) / 4000);
+    if (s.acceleration < -800) { // Stricter deceleration gate
+       decelerationFactor = Math.min(1, Math.abs(s.acceleration) / 5000);
     }
 
-    const proximity = Math.max(0, 1 - (distance / 600));
+    const proximity = Math.max(0, 1 - (distance / 400));
 
     // Composite score: Alignment (40%), Deceleration (40%), Proximity (20%)
     const score = (dotProduct * 0.4) + (decelerationFactor * 0.4) + (proximity * 0.2);

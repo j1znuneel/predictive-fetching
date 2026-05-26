@@ -5,18 +5,18 @@ import { usePredictiveFetch } from './usePredictiveFetch';
  * PredictiveButtonDemo
  * A manual testing component to visualize the usePredictiveFetch hook.
  */
-const PredictiveButtonDemo = () => {
+const PredictiveButtonDemo = ({ id = "1" }) => {
   const buttonRef = useRef(null);
   const [clickCount, setClickCount] = useState(0);
   
-  // Use a real mock API for testing
-  const targetUrl = 'https://jsonplaceholder.typicode.com/posts/1';
+  // Use unique URLs for different buttons
+  const targetUrl = `https://jsonplaceholder.typicode.com/posts/${id}`;
   
   // 1. Hook usage with routeKey for Markov
   const prefetchedData = usePredictiveFetch(buttonRef, targetUrl, {
     ttl: 5000,
     threshold: 0.85,
-    routeKey: '/dashboard'
+    routeKey: `/dashboard/${id}`
   });
 
   const handleClick = () => {
