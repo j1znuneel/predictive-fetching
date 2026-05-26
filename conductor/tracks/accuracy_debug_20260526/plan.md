@@ -16,11 +16,11 @@
     - [x] Update `MarkovTracker.js` to maintain only the last 50 transitions
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Behavioral Recency' (Protocol in workflow.md) (2362a80)
 
-## Phase 3: Visual Debugger
+## Phase 3: Visual Debugger [checkpoint: 077d7ab]
 - [x] Task: Implement Intent Heatmap Overlay (bb523f0)
     - [x] Create `PredictiveDebugger` component to render Canvas/SVG overlay
     - [x] Implement Vector Ghost (velocity line) and Intent Trail (color-coded dots)
     - [x] Implement Score Overlays for target elements
 - [x] Task: Integrate Debugger into Demo (6a162dc)
     - [x] Update `PredictiveButtonDemo.jsx` to include a toggle for the debugger
-- [~] Task: Conductor - User Manual Verification 'Phase 3: Visual Debugger' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Visual Debugger' (Protocol in workflow.md) (077d7ab)
