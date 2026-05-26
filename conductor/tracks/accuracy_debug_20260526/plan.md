@@ -17,10 +17,10 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Behavioral Recency' (Protocol in workflow.md) (2362a80)
 
 ## Phase 3: Visual Debugger
-- [ ] Task: Implement Intent Heatmap Overlay
-    - [ ] Create `PredictiveDebugger` component to render Canvas/SVG overlay
-    - [ ] Implement Vector Ghost (velocity line) and Intent Trail (color-coded dots)
-    - [ ] Implement Score Overlays for target elements
+- [x] Task: Implement Intent Heatmap Overlay (bb523f0)
+    - [x] Create `PredictiveDebugger` component to render Canvas/SVG overlay
+    - [x] Implement Vector Ghost (velocity line) and Intent Trail (color-coded dots)
+    - [x] Implement Score Overlays for target elements
 - [ ] Task: Integrate Debugger into Demo
     - [ ] Update `PredictiveButtonDemo.jsx` to include a toggle for the debugger
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Visual Debugger' (Protocol in workflow.md)
