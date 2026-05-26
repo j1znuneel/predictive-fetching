@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import MarkovTracker from './MarkovTracker';
 import { calculateBestFitAlignment } from './utils/kinematics';
 import NetworkSpeedMonitor from './utils/NetworkSpeedMonitor';
+import { useDebug } from './utils/DebugContext';
 
 /**
  * usePredictiveFetch
@@ -19,6 +20,7 @@ import NetworkSpeedMonitor from './utils/NetworkSpeedMonitor';
 export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.85, routeKey } = {}) => {
   const [data, setData] = useState(null);
   const [dynamicThreshold, setDynamicThreshold] = useState(threshold);
+  const debug = useDebug();
   const cache = useRef(new Map());
   
   // Kinematic state
@@ -115,6 +117,18 @@ export const usePredictiveFetch = (targetRef, url, { ttl = 5000, threshold = 0.8
 
     // Composite score: Alignment (40%), Deceleration (40%), Proximity (20%)
     const score = (dotProduct * 0.4) + (decelerationFactor * 0.4) + (proximity * 0.2);
+
+    if (debug.isEnabled && targetRef.current) {
+      debug.updateDebugInfo(url, {
+        score,
+        dotProduct,
+        decelerationFactor,
+        proximity,
+        rect: targetRef.current.getBoundingClientRect(),
+        cursor: { x: s.currentX, y: s.currentY },
+        velocity: s.velocity
+      });
+    }
 
     if (score > dynamicThreshold && !s.hasFired) {
       s.hasFired = true;
