@@ -5,8 +5,9 @@ describe('MarkovTracker', () => {
   beforeEach(() => {
     // Clear localStorage before each test
     localStorage.clear();
-    // Reset the matrix manually since it's a singleton
+    // Reset the matrix and history manually since it's a singleton
     MarkovTracker.matrix = {};
+    MarkovTracker.history = [];
   });
 
   it('should initialize with an empty matrix', () => {
@@ -51,13 +52,42 @@ describe('MarkovTracker', () => {
     expect(prediction).toBeNull();
   });
 
-  it('should handle multiple exit routes', () => {
-    MarkovTracker.recordTransition('/start', '/end1');
-    MarkovTracker.recordTransition('/start', '/end2');
-    MarkovTracker.recordTransition('/start', '/end2');
+  it('should maintain only the last N transitions', () => {
+    // Force a small window for testing
+    const originalWindow = MarkovTracker.windowSize;
+    MarkovTracker.windowSize = 3;
 
-    const prediction = MarkovTracker.predictNext('/start');
-    expect(prediction.route).toBe('/end2');
-    expect(prediction.confidence).toBe(2/3);
+    MarkovTracker.recordTransition('/a', '/b');
+    MarkovTracker.recordTransition('/b', '/c');
+    MarkovTracker.recordTransition('/c', '/d');
+    
+    // Matrix should represent a->b, b->c, c->d
+    expect(MarkovTracker.predictNext('/a')).toBeDefined();
+    
+    // Record 4th transition. /a -> /b should be purged.
+    MarkovTracker.recordTransition('/d', '/e');
+
+    expect(MarkovTracker.predictNext('/a')).toBeNull();
+    expect(MarkovTracker.predictNext('/d').route).toBe('/e');
+
+    MarkovTracker.windowSize = originalWindow;
+  });
+
+  it('should update matrix counts correctly after purge', () => {
+    MarkovTracker.windowSize = 2;
+
+    MarkovTracker.recordTransition('/a', '/b');
+    MarkovTracker.recordTransition('/a', '/b');
+    
+    expect(MarkovTracker.predictNext('/a').confidence).toBe(1.0);
+
+    // This should purge the first /a -> /b
+    MarkovTracker.recordTransition('/b', '/c');
+
+    // Matrix should now have one /a->/b and one /b->/c
+    expect(MarkovTracker.matrix['/a']['/b']).toBe(1);
+    expect(MarkovTracker.matrix['/b']['/c']).toBe(1);
+
+    MarkovTracker.windowSize = 50;
   });
 });

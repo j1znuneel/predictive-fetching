@@ -1,18 +1,18 @@
 /**
  * MarkovTracker
  * A lightweight Markov Chain for predicting the next route based on historical transitions.
+ * Implements a fixed-window sliding history to prioritize recency.
  */
 class MarkovTracker {
-  constructor(storageKey = 'markov_matrix') {
+  constructor(storageKey = 'markov_matrix', windowSize = 50) {
     this.storageKey = storageKey;
-    this.matrix = this.load();
+    this.historyKey = `${storageKey}_history`;
+    this.windowSize = windowSize;
+    this.matrix = this.loadMatrix();
+    this.history = this.loadHistory();
   }
 
-  /**
-   * Loads the matrix from local storage.
-   * Format: { [source]: { [target]: count } }
-   */
-  load() {
+  loadMatrix() {
     try {
       const data = localStorage.getItem(this.storageKey);
       return data ? JSON.parse(data) : {};
@@ -22,35 +22,58 @@ class MarkovTracker {
     }
   }
 
+  loadHistory() {
+    try {
+      const data = localStorage.getItem(this.historyKey);
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      console.warn('MarkovTracker: Failed to load history', e);
+      return [];
+    }
+  }
+
   save() {
     try {
       localStorage.setItem(this.storageKey, JSON.stringify(this.matrix));
+      localStorage.setItem(this.historyKey, JSON.stringify(this.history));
     } catch (e) {
-      console.warn('MarkovTracker: Failed to save matrix', e);
+      console.warn('MarkovTracker: Failed to save data', e);
     }
   }
 
   /**
    * Records a transition from one route to another.
-   * @param {string} from - The current/source route.
-   * @param {string} to - The next/destination route.
+   * Maintains a sliding window of transitions.
    */
   recordTransition(from, to) {
     if (!from || !to || from === to) return;
 
-    if (!this.matrix[from]) {
-      this.matrix[from] = {};
+    // 1. Add new transition to history
+    this.history.push({ from, to });
+
+    // 2. Update Matrix
+    if (!this.matrix[from]) this.matrix[from] = {};
+    this.matrix[from][to] = (this.matrix[from][to] || 0) + 1;
+
+    // 3. Purge old transition if window exceeded
+    if (this.history.length > this.windowSize) {
+      const oldest = this.history.shift();
+      if (this.matrix[oldest.from] && this.matrix[oldest.from][oldest.to]) {
+        this.matrix[oldest.from][oldest.to]--;
+        
+        // Cleanup empty entries
+        if (this.matrix[oldest.from][oldest.to] <= 0) {
+          delete this.matrix[oldest.from][oldest.to];
+        }
+        if (Object.keys(this.matrix[oldest.from]).length === 0) {
+          delete this.matrix[oldest.from];
+        }
+      }
     }
 
-    this.matrix[from][to] = (this.matrix[from][to] || 0) + 1;
     this.save();
   }
 
-  /**
-   * Predicts the next route based on the current route.
-   * @param {string} currentRoute - The current route string.
-   * @returns {{ route: string, confidence: number } | null}
-   */
   predictNext(currentRoute) {
     const transitions = this.matrix[currentRoute];
     if (!transitions) return null;
