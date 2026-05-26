@@ -10,11 +10,11 @@
     - [x] Integrate monitor into `usePredictiveFetch` to auto-adjust threshold
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Spatial & Network Accuracy' (Protocol in workflow.md) (a8b2e10)
 
-## Phase 2: Behavioral Recency
+## Phase 2: Behavioral Recency [checkpoint: 2362a80]
 - [x] Task: Implement Markov Sliding Window (1a8c789)
     - [x] Write tests for fixed-window transition storage (purge old entries)
     - [x] Update `MarkovTracker.js` to maintain only the last 50 transitions
-- [~] Task: Conductor - User Manual Verification 'Phase 2: Behavioral Recency' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Behavioral Recency' (Protocol in workflow.md) (2362a80)
 
 ## Phase 3: Visual Debugger
 - [ ] Task: Implement Intent Heatmap Overlay
