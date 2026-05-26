@@ -7,5 +7,3 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [x] **Track: Enhance Predictive Accuracy and Debugging Tools**
-*Link: [./tracks/accuracy_debug_20260526/](./tracks/accuracy_debug_20260526/)*
