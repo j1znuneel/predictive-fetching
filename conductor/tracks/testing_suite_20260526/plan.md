@@ -7,7 +7,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Unit Testing for MarkovTracker' (Protocol in workflow.md) (d43160b)
 
 ## Phase 2: Unit Testing for usePredictiveFetch
-- [~] Task: Define test scenarios for usePredictiveFetch hook
+- [x] Task: Define test scenarios for usePredictiveFetch hook (697a117)
 - [ ] Task: Implement unit tests for usePredictiveFetch.js
 - [ ] Task: Verify usePredictiveFetch test coverage (>80%)
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Unit Testing for usePredictiveFetch' (Protocol in workflow.md)
