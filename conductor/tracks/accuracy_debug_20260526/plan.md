@@ -11,9 +11,9 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Spatial & Network Accuracy' (Protocol in workflow.md) (a8b2e10)
 
 ## Phase 2: Behavioral Recency
-- [ ] Task: Implement Markov Sliding Window
-    - [ ] Write tests for fixed-window transition storage (purge old entries)
-    - [ ] Update `MarkovTracker.js` to maintain only the last 50 transitions
+- [x] Task: Implement Markov Sliding Window (1a8c789)
+    - [x] Write tests for fixed-window transition storage (purge old entries)
+    - [x] Update `MarkovTracker.js` to maintain only the last 50 transitions
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Behavioral Recency' (Protocol in workflow.md)
 
 ## Phase 3: Visual Debugger
