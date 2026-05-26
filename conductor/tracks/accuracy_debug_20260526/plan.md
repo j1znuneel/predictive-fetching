@@ -23,4 +23,4 @@
     - [x] Implement Score Overlays for target elements
 - [x] Task: Integrate Debugger into Demo (6a162dc)
     - [x] Update `PredictiveButtonDemo.jsx` to include a toggle for the debugger
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Visual Debugger' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Phase 3: Visual Debugger' (Protocol in workflow.md)
