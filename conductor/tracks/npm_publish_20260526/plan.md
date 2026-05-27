@@ -14,9 +14,9 @@
 - [x] Task: Create Comprehensive README.md (a4d3b70)
     - [x] Write installation and quick start guides
     - [x] Add API reference for usePredictiveFetch and MarkovTracker
-- [ ] Task: Package Lean-up
-    - [ ] Configure `files` whitelist in `package.json` to exclude demo/tests
-    - [ ] Ensure `.npmignore` or `.gitignore` is properly handled
+- [x] Task: Package Lean-up (5951a8d)
+    - [x] Configure `files` whitelist in `package.json` to exclude demo/tests
+    - [x] Ensure `.npmignore` or `.gitignore` is properly handled
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Documentation & Cleanup' (Protocol in workflow.md)
 
 ## Phase 3: Validation & Dry-Run
