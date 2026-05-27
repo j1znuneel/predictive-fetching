@@ -20,7 +20,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Documentation & Cleanup' (Protocol in workflow.md) (260e395)
 
 ## Phase 3: Validation & Dry-Run
-- [ ] Task: Perform Local Pack Validation
+- [~] Task: Perform Local Pack Validation
     - [ ] Run `npm run build` and verify `dist/` contents
     - [ ] Run `npm pack` and inspect the resulting tarball
 - [ ] Task: Versioning
