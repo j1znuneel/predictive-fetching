@@ -4,6 +4,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { usePredictiveFetch } from './usePredictiveFetch';
 import MarkovTracker from './MarkovTracker';
 import NetworkSpeedMonitor from './utils/NetworkSpeedMonitor';
+import { DebugProvider } from './utils/DebugContext';
 
 // Helper component for integration test
 const TestComponent = ({ url, routeKey }) => {
@@ -26,6 +27,7 @@ describe('Predictive Engine Integration', () => {
   beforeEach(() => {
     localStorage.clear();
     MarkovTracker.matrix = {};
+    MarkovTracker.history = [];
     
     vi.stubGlobal('fetch', vi.fn(() => 
       Promise.resolve({
@@ -56,8 +58,12 @@ describe('Predictive Engine Integration', () => {
         MarkovTracker.recordTransition('/', '/target');
     }
 
-    // 2. Render component. It should recognize high confidence for /target
-    render(<TestComponent url={mockUrl} routeKey="/target" />);
+    // 2. Render component with DebugProvider. It should recognize high confidence for /target
+    render(
+      <DebugProvider>
+        <TestComponent url={mockUrl} routeKey="/target" />
+      </DebugProvider>
+    );
 
     // 3. Wait for effect
     await act(async () => {
@@ -69,7 +75,11 @@ describe('Predictive Engine Integration', () => {
   });
 
   it('should trigger prefetch via real-time kinematic movement', async () => {
-    render(<TestComponent url={mockUrl} routeKey="/other" />);
+    render(
+      <DebugProvider>
+        <TestComponent url={mockUrl} routeKey="/other" />
+      </DebugProvider>
+    );
 
     // Initial state
     expect(screen.getByTestId('target-button')).toHaveTextContent('Initial');

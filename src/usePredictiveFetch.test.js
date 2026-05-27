@@ -3,6 +3,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { usePredictiveFetch } from './usePredictiveFetch';
 import MarkovTracker from './MarkovTracker';
 import NetworkSpeedMonitor from './utils/NetworkSpeedMonitor';
+import { DebugProvider } from './utils/DebugContext';
 
 describe('usePredictiveFetch', () => {
   let targetRef;
@@ -49,7 +50,9 @@ describe('usePredictiveFetch', () => {
   });
 
   it('should initialize with null data', () => {
-    const { result } = renderHook(() => usePredictiveFetch(targetRef, mockUrl));
+    const { result } = renderHook(() => usePredictiveFetch(targetRef, mockUrl), {
+        wrapper: DebugProvider
+    });
     expect(result.current).toBeNull();
   });
 
@@ -59,7 +62,9 @@ describe('usePredictiveFetch', () => {
       confidence: 0.9
     });
 
-    const { result } = renderHook(() => usePredictiveFetch(targetRef, mockUrl, { routeKey: '/dashboard' }));
+    const { result } = renderHook(() => usePredictiveFetch(targetRef, mockUrl, { routeKey: '/dashboard' }), {
+        wrapper: DebugProvider
+    });
 
     await act(async () => {
       await Promise.resolve();
@@ -70,7 +75,9 @@ describe('usePredictiveFetch', () => {
   });
 
   it('should prefetch when kinematic threshold is met', async () => {
-    const { result } = renderHook(() => usePredictiveFetch(targetRef, mockUrl));
+    const { result } = renderHook(() => usePredictiveFetch(targetRef, mockUrl), {
+        wrapper: DebugProvider
+    });
 
     // 1. Initial position
     act(() => {
@@ -100,7 +107,9 @@ describe('usePredictiveFetch', () => {
   });
 
   it('should respect overshoot protection', async () => {
-    renderHook(() => usePredictiveFetch(targetRef, mockUrl));
+    renderHook(() => usePredictiveFetch(targetRef, mockUrl), {
+        wrapper: DebugProvider
+    });
 
     act(() => {
       window.advanceTime(0);
@@ -124,7 +133,8 @@ describe('usePredictiveFetch', () => {
     const { result, rerender } = renderHook(
       ({ url, routeKey }) => usePredictiveFetch(targetRef, url, { routeKey }), 
       {
-        initialProps: { url: mockUrl, routeKey: '/dashboard' }
+        initialProps: { url: mockUrl, routeKey: '/dashboard' },
+        wrapper: DebugProvider
       }
     );
 
