@@ -23,6 +23,6 @@
 - [x] Task: Perform Local Pack Validation (25487b4)
     - [x] Run `npm run build` and verify `dist/` contents
     - [x] Run `npm pack` and inspect the resulting tarball
-- [ ] Task: Versioning
-    - [ ] Set final version to `0.1.0`
+- [x] Task: Versioning (ac01434)
+    - [x] Set final version to `0.1.0`
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Validation & Dry-Run' (Protocol in workflow.md)
