@@ -10,5 +10,3 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [x] **Track: Publish prefetch-ai to npm**
-*Link: [./tracks/npm_publish_20260526/](./tracks/npm_publish_20260526/)*
