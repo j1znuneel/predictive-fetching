@@ -3,7 +3,7 @@
  * A lightweight Markov Chain for predicting the next route based on historical transitions.
  * Implements a fixed-window sliding history to prioritize recency.
  */
-class MarkovTracker {
+export class MarkovTracker {
   constructor(storageKey = 'markov_matrix', windowSize = 50) {
     this.storageKey = storageKey;
     this.historyKey = `${storageKey}_history`;
