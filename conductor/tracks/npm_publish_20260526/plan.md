@@ -5,9 +5,9 @@
     - [x] Install `microbundle` as a dev dependency
     - [x] Add `build` script to `package.json`
     - [x] Configure `package.json` fields (`source`, `main`, `module`, `types`, `exports`)
-- [ ] Task: Refactor for Export
-    - [ ] Create `src/index.js` as the primary entry point
-    - [ ] Ensure all public utilities (hooks, classes) are exported from index.js
+- [x] Task: Refactor for Export (2774538)
+    - [x] Create `src/index.js` as the primary entry point
+    - [x] Ensure all public utilities (hooks, classes) are exported from index.js
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Build Infrastructure' (Protocol in workflow.md)
 
 ## Phase 2: Documentation & Cleanup
