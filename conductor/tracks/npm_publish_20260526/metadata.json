@@ -1,8 +1,0 @@
-{
-  "track_id": "npm_publish_20260526",
-  "type": "chore",
-  "status": "new",
-  "created_at": "2026-05-26T22:00:00Z",
-  "updated_at": "2026-05-26T22:00:00Z",
-  "description": "Publish prefetch-ai to npm"
-}
