@@ -14,6 +14,10 @@
     }
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/j1znuneel/predictive-fetching.git"
+  },
   "files": [
     "dist",
     "README.md",
